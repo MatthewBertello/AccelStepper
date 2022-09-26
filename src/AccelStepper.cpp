@@ -17,10 +17,12 @@ added stdint.h to AccelStepper.h
 #include <cmath>
 #include <wiringPi.h>
 
+
 using namespace std;
 #if 0
-// Some debugging assistance
-float max(float num1, float num2)
+
+
+float AccelStepper::max(float num1, float num2)
 {
     if (num1 > num2)
         return num1;
@@ -28,7 +30,7 @@ float max(float num1, float num2)
         return num2;
 }
 
-float constrain(float val, float min, float max)
+float AccelStepper::constrain(float val, float min, float max)
 {
     if (val < min)
         return min;
@@ -37,7 +39,23 @@ float constrain(float val, float min, float max)
     else
         return val;
 }
+void AccelStepper::startTime() { //this function must be called to begin runtime clock
+    chrono::auto start = high_resolution_clock::now();
+}
 
+int AccelStepper::micros() {
+    chrono::auto stop = high_resolution_clock::now();
+    chrono::auto duration = duration_cast<microseconds>(stop - start);
+    return duration.count();
+}
+
+int AccelStepper::millis() {
+    chrono::auto stop = high_resolution_clock::now();
+    chrono::auto duration = duration_cast<milliseconds>(stop - start);
+    return duration.count();
+}
+
+// Some debugging assistance
 void dump(uint8_t* p, int l)
 {
     int i;
